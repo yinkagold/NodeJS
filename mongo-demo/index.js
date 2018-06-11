@@ -39,17 +39,21 @@ async function createCourse(){
 // getCourses();
 // Query first approach 
 async function updateCourse(id){
-    const course = await Course.findById(id);
-
-    if (!course) return;
-
-   
-    course.isPublished = true;
-    course.author = 'Another Author';
-
-    const result = await course.save();
+    //const result = await Course.update( { _id: id }, {
+    const result = await Course.findByIdAndUpdate(  id , {
+        $set: {
+            author: 'Bob',
+            isPublished: false
+        }
+    }, {new: true }); // returns the updated document 
     console.log(result);
-   
 }
 
-updateCourse('5b1cecb69a2c8d5f601317f8');
+//updateCourse('5b1ced4592fdde2408c77fe9');
+
+async function removeCourse(id){
+// const result = await Course.deleteOne({ _id:id });
+ const course = await Course.findByIdAndRemove(id);
+ console.log(course)
+}
+removeCourse('5b1ced4592fdde2408c77fe9');
