@@ -17,13 +17,22 @@ mongoose.connect('mongodb://localhost/playground')
             enum: ['web', 'mobile', 'network'] 
         },
         author: String,
-        tags: [String], 
+        // setting the validate property to an object, add a function and set a message 
+        tags: {
+            type: Array,
+            validate: {
+                validator: function(v){
+                    return v && v.length > 0;
+                },
+                message: 'A course should have at least one tag'
+            }
+        },
         date: { type: Date, default: Date.now },
         isPublished: Boolean,
         Price: { 
             type: Number,
-            required: function() { return this.isPublished; },
-            min: 20,
+          //  required: function() { return this.isPublished; },
+            min: 10,
             max: 200
         }
     });
@@ -34,7 +43,7 @@ async function createCourse(){
         name: 'Angular Course',
         category: 'web',
         author: 'Yinka',
-        tags: ['angular', 'frontend'],
+        tags: null,
         isPublished: true,
         price: 15
     });
