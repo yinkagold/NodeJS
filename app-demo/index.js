@@ -1,8 +1,8 @@
 const mongoose = require('mongoose');
 const express = require('express');
 const genres = require('./routes/genres');
+const customers = require('./routes/customers');
 const home = require('./routes/home');
-
 const app = express();
 
 
@@ -17,6 +17,7 @@ app.set('views', './views');
 
 app.use(express.json());
 app.use('/api/genres', genres);
+app.use('/api/customers', customers);
 app.use('/', home);
 
 //PORT
